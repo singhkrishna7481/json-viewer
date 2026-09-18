@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lattice JSON Studio</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <div class="logo">
+        <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="7"/>
+          <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+        </svg>
+        <span class="logo-title">Lattice <small>Studio</small></span>
+      </div>
+      <span class="badge">v1.0</span>
+    </header>
+
+    <div class="actions-grid">
+      <button class="btn primary" id="btnFullTab">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Open Full Studio
+      </button>
+      <button class="btn secondary" id="btnSidePanel">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
+        Side Panel
+      </button>
+    </div>
+
+    <div class="scratchpad-section">
+      <div class="section-title">Quick JSON Scratchpad</div>
+      <textarea id="quickTa" placeholder="Paste JSON snippet here to inspect or validate..." spellcheck="false"></textarea>
+      <div class="scratchpad-actions">
+        <button class="btn mini" id="btnQuickFormat">Prettify</button>
+        <button class="btn mini" id="btnQuickMinify">Minify</button>
+        <span class="spacer"></span>
+        <button class="btn mini primary" id="btnQuickInspect">Inspect in Studio &rarr;</button>
+      </div>
+      <div id="quickStatus"></div>
+    </div>
+
+    <footer class="popup-footer">
+      <span>Shortcut: <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd></span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "Lattice — JSON Studio Pro",
+  "version": "1.0.0",
+  "description": "Auto-detects and formats JSON pages with Tree, Table, Smart Search, Rich HTML Preview, Code Generator, Charts & PII Scanner.",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "sidePanel",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Lattice JSON Studio"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "app.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "app.html",
+        "app.css",
+        "app.js",
+        "icons/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "open_studio": {
+      "suggested_key": {
+        "default": "Alt+J",
+        "mac": "Command+Shift+J"
+      },
+      "description": "Open Lattice JSON Studio in a new tab"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

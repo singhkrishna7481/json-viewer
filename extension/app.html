@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lattice — JSON Studio Pro</title>
+<link rel="icon" type="image/png" href="icons/icon32.png">
+<link rel="stylesheet" href="app.css">
+</head>
+<body data-lnums="1" data-badges="1" data-idx="1">
+<header id="topbar">
+ <button class="btn icon ghost" id="btnSidebarM" aria-label="Toggle sidebar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+ <div id="logo"><div class="mark">{ }</div><div><h1>Lattice</h1><small>JSON Studio · v3.2</small></div></div>
+ <span class="tsep"></span>
+ <button class="btn ghost" id="btnOpen" title="Import .json file"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 21h14"/></svg><span class="bl">Open</span></button>
+ <button class="btn ghost" id="btnPaste" title="Paste JSON"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg><span class="bl">Paste</span></button>
+ <button class="btn ghost" id="btnURL" title="Load from URL"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span class="bl">URL</span></button>
+ <button class="btn ghost" id="btnExport" title="Export (⌘S)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m17 10-5 5-5-5"/><path d="M5 21h14"/></svg><span class="bl">Export</span></button>
+ <span class="tsep"></span>
+ <button class="btn ghost" id="btnFormat" title="Pretty print (⌘⇧F)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11L9.5 22 19 9.5h-6.5z"/></svg><span class="bl">Format</span></button>
+ <button class="btn ghost" id="btnMinify" title="Minify (⌘⇧M)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 14h6v6"/><path d="M20 10h-6V4"/><path d="m14 10 7-7"/><path d="m3 21 7-7"/></svg><span class="bl">Minify</span></button>
+ <span class="tspacer"></span>
+ <button class="btn ghost" id="btnPath" title="JSONPath explorer"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg><span class="bl">Path</span></button>
+ <button class="btn ghost" id="btnDiff" title="Diff two documents"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v3a3 3 0 0 0 3 3h3"/><path d="M18 15V9a3 3 0 0 0-3-3h-3"/></svg><span class="bl">Diff</span></button>
+ <button class="btn ghost" id="btnTrans" title="Transform tools"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg><span class="bl">Transform</span></button>
+ <button class="btn ghost" id="btnToon" title="Convert to TOON for LLMs"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg><span class="bl">TOON</span></button>
+ <button class="btn ghost" id="btnStats" title="Statistics"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span class="bl">Stats</span></button>
+ <button class="btn ghost" id="btnSchema" title="Schema validation"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span class="bl">Schema</span></button>
+ <button class="btn ghost" id="btnCharts" title="Smart Chart & Analytics Studio"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span class="bl">Charts</span></button>
+ <button class="btn ghost" id="btnPII" title="PII Scanner & Redaction"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="bl">PII</span></button>
+ <span class="tsep"></span>
+ <button class="btn icon ghost" id="btnTheme" title="Toggle theme"></button>
+ <button class="btn icon ghost" id="btnKeys" title="Keyboard shortcuts (?)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M9 14h6"/></svg></button>
+ <button class="btn icon ghost" id="btnPal" title="Command palette (⌘K)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9V6a3 3 0 1 0-3 3h3zm0 0v6m0-6h6m-6 6v3a3 3 0 1 1-3-3h3zm6-6h3a3 3 0 1 0-3-3v3zm0 6v3a3 3 0 1 0 3-3h-3zm0 0H9"/></svg></button>
+ <button class="btn icon ghost" id="btnSettings" title="Settings"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 21v-6M4 9V3M12 21v-9M12 6V3M20 21v-4M20 11V3"/><path d="M2 15h4M10 6h4M18 17h4"/></svg></button>
+ <button class="btn icon ghost" id="btnInspM" aria-label="Toggle inspector"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
+</header>
+
+<div id="tabstrip" role="tablist"><button id="btnNewTab" title="New document" aria-label="New document"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+
+<main id="app">
+ <aside id="sidebar" aria-label="Sidebar">
+  <div class="sb-tabs">
+   <button data-sb="outline" class="on">Outline</button>
+   <button data-sb="search">Search</button>
+   <button data-sb="marks">Bookmarks</button>
+  </div>
+  <div class="sb-body">
+   <div id="sb-outline"></div>
+   <div id="sb-search" hidden>
+    <div class="field"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+     <input id="sIn" placeholder="Search keys, values, >100, key:val (⌘F)" aria-label="Search"></div>
+    <div class="opt-row">
+     <button class="chip" id="sCase" title="Case sensitive">Aa</button>
+     <button class="chip" id="sWord" title="Whole word">\b</button>
+     <button class="chip" id="sRegex" title="Regex">.*</button>
+     <button class="chip on" id="sKeys" title="Search keys">keys</button>
+     <button class="chip on" id="sVals" title="Search values">values</button>
+     <button class="chip on" id="sPaths" title="Search paths">paths</button>
+     <button class="chip" id="sFilterTree" title="Filter tree view to show only matching branches" style="border-color:var(--acc-line)">🌲 Filter tree</button>
+    </div>
+    <div class="opt-types" style="margin-top:2px">
+     <span style="font-size:10px;color:var(--tx3);align-self:center;margin-right:2px">Type:</span>
+     <button class="chip mini-chip on" data-stype="all">all</button>
+     <button class="chip mini-chip" data-stype="string">str</button>
+     <button class="chip mini-chip" data-stype="number">num</button>
+     <button class="chip mini-chip" data-stype="boolean">bool</button>
+     <button class="chip mini-chip" data-stype="null">null</button>
+     <button class="chip mini-chip" data-stype="array">arr</button>
+     <button class="chip mini-chip" data-stype="object">obj</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;margin:6px 0 8px">
+     <button class="btn icon" id="sPrev" title="Previous match"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg></button>
+     <button class="btn icon" id="sNext" title="Next match"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+     <span id="sCount" style="font-family:var(--font-mono);font-size:11px;color:var(--tx3)"></span>
+     <span class="tspacer"></span>
+     <button class="btn mini" id="sResetFilter" style="display:none;font-size:10px;padding:2px 7px">Reset</button>
+    </div>
+    <div id="sResults"></div>
+   </div>
+   <div id="sb-marks" hidden></div>
+   <div class="sb-h" style="margin-top:16px">Recent files</div>
+   <div id="recents"></div>
+  </div>
+ </aside>
+ <div class="splitter" id="sp1" aria-hidden="true"></div>
+
+ <section id="workspace" aria-label="Workspace">
+  <div id="wsbar">
+   <div class="seg" id="viewseg" role="tablist" aria-label="View mode">
+    <button data-view="tree" class="on">Tree</button>
+    <button data-view="raw">Raw</button>
+    <button data-view="table">Table</button>
+    <button data-view="split">Split</button>
+   </div>
+   <nav id="crumbs" aria-label="Breadcrumb"></nav>
+   <select class="mini" id="depthSel" title="Expand to depth"><option value="">Depth…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+   <button class="btn icon" id="btnExpAll" title="Expand all"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m7 6 5 4 5-4"/><path d="m7 13 5 4 5-4"/></svg></button>
+   <button class="btn icon" id="btnColAll" title="Collapse all"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m7 3 5 4 5-4"/><path d="m7 21 5-4 5 4"/></svg></button>
+  </div>
+  <div id="wsbody">
+   <div class="view on" id="view-tree">
+    <div id="treeFilterBanner">
+     <span id="treeFilterText">🔍 Filter active</span>
+     <button class="btn mini" id="treeFilterClearBtn" style="font-size:10.5px;padding:2px 8px">Clear filter</button>
+    </div>
+    <div id="tree" tabindex="0" aria-label="JSON tree, use arrow keys to navigate"></div>
+   </div>
+   <div class="view" id="view-raw">
+    <div id="rawOut" class="mono"></div>
+    <textarea id="rawEdit" hidden spellcheck="false" aria-label="Edit raw JSON"></textarea>
+   </div>
+   <div class="view" id="view-table"><div id="tableBox"></div></div>
+   <div class="view" id="view-split"><div id="splitTreeWrap"></div><div id="splitRaw" class="mono"></div></div>
+   <div id="errbar" hidden>
+    <span class="eic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+    <div style="flex:1;min-width:0">
+     <strong><span class="eloc" id="errLoc"></span><span id="errMsg"></span></strong>
+     <code class="esnip" id="errSnip"></code>
+     <div class="esug" id="errSug"></div>
+    </div>
+    <button class="btn" id="errFix" style="flex:none">Auto-fix</button>
+   </div>
+   <div id="emptyState">
+    <div class="es-mark"><b>{</b><i>}</i></div>
+    <h2>Drop JSON to begin</h2>
+    <p>Drag a <b>.json</b> file anywhere, paste a payload, fetch a URL, or explore the sample dataset. Everything stays in your browser.</p>
+    <div class="es-actions">
+     <button class="btn primary" id="esSample">Load sample</button>
+     <button class="btn" id="esPaste">Paste JSON</button>
+     <button class="btn" id="esOpen">Open file</button>
+     <button class="btn" id="esURL">Fetch URL</button>
+    </div>
+    <div class="es-feats"><span>tree explorer</span><span>jsonpath</span><span>diff</span><span>csv · yaml · ts</span><span>undo / redo</span><span>⌘K palette</span></div>
+   </div>
+   <div id="loadveil"><div style="display:flex;flex-direction:column;gap:12px;align-items:center;color:var(--tx2)"><div class="spin"></div><span id="loadmsg">Loading…</span></div></div>
+  </div>
+ </section>
+
+ <div class="splitter" id="sp2" aria-hidden="true"></div>
+ <aside id="inspector" aria-label="Inspector">
+  <div class="insp-h"><span class="pt">Inspector</span><span class="tspacer"></span>
+   <button class="btn icon ghost" id="btnEditRaw" title="Edit raw JSON"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg></button>
+   <button class="xbtn" id="inspClose" aria-label="Close inspector"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div id="inspBody"></div>
+ </aside>
+</main>
+
+<footer id="statusbar">
+ <span class="pill idle" id="stValid"><i class="pdot"></i><span id="stValidTx">Empty</span></span>
+ <span id="stStats"></span>
+ <span class="sb-r"><span>⌘K palette</span><span>⌘F search</span><span>⌘⇧F format</span><span>? keys</span></span>
+</footer>
+
+<nav id="mobilebar">
+ <button id="mbSb"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Outline</button>
+ <button id="mbPal"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>Commands</button>
+ <button id="mbInsp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Inspect</button>
+ <button id="mbSet"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 21v-6M4 9V3M12 21v-9M12 6V3M20 21v-4M20 11V3"/><path d="M2 15h4M10 6h4M18 17h4"/></svg>Settings</button>
+</nav>
+
+<!-- modals -->
+<div class="overlay" id="palette"><div class="pbox" role="dialog" aria-label="Command palette">
+ <div class="pin-row"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+  <input id="palIn" placeholder="Type a command…" aria-label="Command"><kbd>esc</kbd></div>
+ <div id="palList"></div>
+</div></div>
+
+<div class="overlay" id="mPaste"><div class="mbox" role="dialog" aria-label="Paste JSON">
+ <div class="mhead"><div><h2>Paste JSON</h2><p class="sub">Drop raw JSON text below — it's parsed the moment you load it.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <textarea class="mta" id="pasteTa" rows="9" placeholder='{ "hello": "world" }' spellcheck="false"></textarea>
+ <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+  <button class="btn" data-close>Cancel</button>
+  <button class="btn primary" id="pasteLoad">Load into document</button></div>
+</div></div>
+
+<div class="overlay" id="mURL"><div class="mbox" role="dialog" aria-label="Load from URL" style="width:min(520px,94vw)">
+ <div class="mhead"><div><h2>Load from URL</h2><p class="sub">Fetches a public JSON endpoint directly from your browser. CORS rules of the remote server apply.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <div class="field"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>
+  <input id="urlIn" placeholder="https://api.example.com/data.json"></div>
+ <div id="urlMsg" style="font-size:12px;color:var(--err);margin-top:8px;min-height:16px"></div>
+ <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
+  <button class="btn" data-close>Cancel</button>
+  <button class="btn primary" id="urlGo">Fetch</button></div>
+</div></div>
+
+<div class="overlay" id="mPath"><div class="mbox" role="dialog" aria-label="JSONPath explorer">
+ <div class="mhead"><div><h2>JSONPath explorer</h2><p class="sub">Query the active document. Supports <code style="color:var(--acc)">$</code>, dot & bracket access, <code style="color:var(--acc)">[*]</code>, <code style="color:var(--acc)">*</code> and <code style="color:var(--acc)">..</code> recursive descent.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <div style="display:flex;gap:8px">
+  <div class="field" style="flex:1"><input id="pIn" placeholder="$.sourcing[*].score" spellcheck="false" style="font-family:var(--font-mono)"></div>
+  <button class="btn primary" id="pRun">Run</button>
+  <button class="btn" id="pCopy" disabled>Copy results</button></div>
+ <div class="opt-row" id="pExamples">
+  <button class="chip">$</button><button class="chip">$.retail.cafes[0]</button><button class="chip">$..score</button>
+  <button class="chip">$.sourcing[*].notes</button><button class="chip">$..*</button></div>
+ <div id="pOut" style="max-height:38vh;overflow:auto"></div>
+</div></div>
+
+<div class="overlay" id="mDiff"><div class="mbox" role="dialog" aria-label="JSON diff" style="width:min(780px,94vw)">
+ <div class="mhead"><div><h2>Diff lab</h2><p class="sub">Deep-compare <b>A</b> (the active document) against <b>B</b>. Click any difference to jump into the tree.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <textarea class="mta" id="dB" rows="6" placeholder='Paste document B…' spellcheck="false"></textarea>
+ <div style="display:flex;align-items:center;gap:8px;margin:11px 0;flex-wrap:wrap">
+  <button class="btn primary" id="dRun">Compare</button>
+  <button class="btn" id="dFile">Load B from file</button>
+  <button class="btn" id="dSwap">Copy A → B</button>
+  <span id="dSum" style="font-family:var(--font-mono);font-size:11.5px"></span></div>
+ <div class="opt-row" id="dFilters">
+  <button class="chip on" data-f="all">all</button><button class="chip" data-f="add">added</button>
+  <button class="chip" data-f="del">removed</button><button class="chip" data-f="chg">changed</button></div>
+ <div id="dOut" style="max-height:40vh;overflow:auto;border:1px solid var(--line);border-radius:9px;background:var(--code)">
+  <div style="padding:26px;text-align:center;color:var(--tx3);font-size:12.5px">Results appear here</div></div>
+</div></div>
+
+<div class="overlay" id="mTrans"><div class="mbox" role="dialog" aria-label="Transform" style="width:min(720px,94vw)">
+ <div class="mhead"><div><h2>Transform</h2><p class="sub" id="tNote">Convert the active document.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+  <select class="mini" id="tSel" style="padding:7px 26px 7px 10px">
+   <option value="toon">JSON → TOON (Token-Oriented Object Notation · LLM-optimized)</option>
+   <option value="zod">JSON → Zod Schemas (TypeScript)</option>
+   <option value="pydantic">JSON → Python Pydantic v2 Models</option>
+   <option value="go">JSON → Go Structs</option>
+   <option value="rust">JSON → Rust Serde Structs</option>
+   <option value="csv">JSON → CSV</option><option value="yaml">JSON → YAML</option>
+   <option value="tsint">JSON → TypeScript interfaces</option><option value="tstype">JSON → TypeScript types</option>
+   <option value="js">JSON → JS object literal</option><option value="flat">Flatten (dot paths)</option>
+   <option value="keys">Extract keys</option><option value="values">Extract values</option>
+   <option value="esc">Escape root string</option><option value="unesc">Unescape root string</option>
+  </select>
+  <span class="tspacer"></span>
+  <button class="btn" id="tCopy">Copy</button><button class="btn" id="tDl">Download</button></div>
+ <pre class="outbox" id="tOut"></pre>
+</div></div>
+
+<div class="overlay" id="mStats"><div class="mbox" role="dialog" aria-label="Statistics" style="width:min(620px,94vw)">
+ <div class="mhead"><div><h2>Document statistics</h2><p class="sub">A structural profile of the active document.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <div id="statsBody"></div>
+</div></div>
+
+<div class="overlay" id="mSchema"><div class="mbox" role="dialog" aria-label="Schema validation" style="width:min(680px,94vw)">
+ <div class="mhead"><div><h2>Schema Validation</h2><p class="sub">Load a JSON Schema (draft-07/2020-12) to validate the active document. Errors appear inline in the tree.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <textarea class="mta" id="schemaTa" rows="7" placeholder='{ "type": "object", "properties": { ... } }' spellcheck="false"></textarea>
+ <div style="display:flex;gap:8px;align-items:center;margin:11px 0;flex-wrap:wrap">
+  <button class="btn primary" id="schemaRun">Validate</button>
+  <button class="btn" id="schemaSample">Sample schema</button>
+  <button class="btn" id="schemaFile">Load schema file</button>
+  <button class="btn" id="schemaClear">Clear schema</button>
+  <span id="schemaStatus" style="font-family:var(--font-mono);font-size:11.5px"></span></div>
+ <div id="schemaOut" style="max-height:38vh;overflow:auto;border:1px solid var(--line);border-radius:9px;background:var(--code)">
+  <div style="padding:26px;text-align:center;color:var(--tx3);font-size:12.5px">Validation results appear here</div></div>
+ <input type="file" id="schemaFileIn" accept=".json" hidden>
+</div></div>
+
+<div class="overlay" id="mKeys"><div class="mbox" role="dialog" aria-label="Keyboard shortcuts" style="width:min(500px,94vw)">
+ <div class="mhead"><div><h2>Keyboard shortcuts</h2><p class="sub">Speed controls for the whole studio.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <div class="mrow"><span>Command palette</span><span><kbd>⌘</kbd> <kbd>K</kbd></span></div>
+ <div class="mrow"><span>Search</span><span><kbd>⌘</kbd> <kbd>F</kbd></span></div>
+ <div class="mrow"><span>Export / save</span><span><kbd>⌘</kbd> <kbd>S</kbd></span></div>
+ <div class="mrow"><span>Pretty print</span><span><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>F</kbd></span></div>
+ <div class="mrow"><span>Minify</span><span><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>M</kbd></span></div>
+ <div class="mrow"><span>Toggle sidebar</span><span><kbd>⌘</kbd> <kbd>B</kbd></span></div>
+ <div class="mrow"><span>Toggle inspector</span><span><kbd>⌘</kbd> <kbd>J</kbd></span></div>
+ <div class="mrow"><span>Undo / redo</span><span><kbd>⌘</kbd> <kbd>Z</kbd> / <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>Z</kbd></span></div>
+ <div class="mrow"><span>Tree navigation</span><span><kbd>↑↓←→</kbd> <kbd>⏎</kbd> (focus tree)</span></div>
+ <div class="mrow"><span>Close panels & dialogs</span><span><kbd>Esc</kbd></span></div>
+</div></div>
+
+<div class="overlay" id="mCharts"><div class="mbox" role="dialog" aria-label="Smart Chart & Analytics Studio" style="width:min(820px,95vw)">
+ <div class="mhead"><div><h2>Smart Chart & Analytics</h2><p class="sub">Instant visual analytics & distributions inferred from JSON collections.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+  <select class="mini" id="chartDataset" title="Select Array Dataset" style="max-width:210px"></select>
+  <div class="seg" id="chartTypeSeg"><button data-ctype="bar" class="on">Bar</button><button data-ctype="line">Line</button><button data-ctype="donut">Donut</button></div>
+  <select class="mini" id="chartMetric" title="Y-Axis / Metric"></select>
+  <select class="mini" id="chartLabel" title="X-Axis / Category"></select>
+  <span class="tspacer"></span>
+  <button class="btn" id="chartExportSvg">Export SVG</button>
+ </div>
+ <div class="chart-wrap">
+  <svg class="chart-svg" id="chartSvg" viewBox="0 0 760 310"></svg>
+ </div>
+ <div class="chart-stat-row" id="chartStatRow"></div>
+</div></div>
+
+<div class="overlay" id="mPII"><div class="mbox" role="dialog" aria-label="PII Scanner & Redaction Studio" style="width:min(740px,94vw)">
+ <div class="mhead"><div><h2>PII & Sensitive Data Audit</h2><p class="sub">Detect API tokens, secrets, emails, credentials, and sensitive records with 1-click masking.</p></div>
+ <button class="xbtn" data-close><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+  <div id="piiRiskStatus"></div>
+  <div style="display:flex;gap:8px">
+   <button class="btn danger" id="piiRedactAll">Redact All</button>
+   <button class="btn" id="piiMaskAll">Mask / Anonymize</button>
+   <button class="btn" id="piiRescan">Rescan</button>
+  </div>
+ </div>
+ <div id="piiList" style="max-height:42vh;overflow:auto;border:1px solid var(--line);border-radius:9px;background:var(--code);padding:8px"></div>
+</div></div>
+
+<div class="overlay" id="mHtmlPreview"><div class="mbox" role="dialog" aria-label="HTML Preview" style="width:min(880px,95vw);max-height:92vh;display:flex;flex-direction:column">
+ <div class="dh">
+  <div style="display:flex;align-items:center;gap:8px">
+   <span class="mchip m-string" style="font-size:10px;font-weight:700">HTML PREVIEW</span>
+   <h2 style="font-size:15px;margin:0" id="htmlPrevTitle">Rendered Content</h2>
+  </div>
+  <span class="tspacer"></span>
+  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+   <div class="seg" id="htmlPrevMode">
+    <button class="on" data-m="rendered">Rendered</button>
+    <button data-m="source">Source</button>
+   </div>
+   <div class="seg" id="htmlPrevTheme">
+    <button class="on" data-th="dark">Dark</button>
+    <button data-th="light">Light</button>
+   </div>
+   <button class="btn mini" id="htmlPrevZoomOut" title="Zoom out font" style="font-weight:700">A-</button>
+   <button class="btn mini" id="htmlPrevZoomIn" title="Zoom in font" style="font-weight:700">A+</button>
+   <button class="btn mini" id="htmlPrevCopy"><svg class="ic" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+   <button class="xbtn" onclick="closeModal('mHtmlPreview')" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+ </div>
+ <div class="html-prev-body" id="htmlPrevBody" style="flex:1;overflow:auto;padding:16px 20px;min-height:300px;border-radius:8px;background:var(--bg0);border:1px solid var(--line);margin:12px 0">
+  <div id="htmlPrevRendered" class="rendered-html-content"></div>
+  <pre id="htmlPrevSource" style="display:none;margin:0;font-family:var(--font-mono);font-size:12px;line-height:1.6;white-space:pre-wrap;word-break:break-all;color:var(--str)"></pre>
+ </div>
+ <div class="db-foot" style="display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--tx3);padding:4px 0">
+  <span id="htmlPrevStats"></span>
+  <div style="display:flex;gap:8px">
+   <button class="btn mini" id="htmlPrevCopyClean">Copy Plain Text</button>
+   <button class="btn mini" onclick="closeModal('mHtmlPreview')">Close</button>
+  </div>
+ </div>
+</div></div>
+
+<div class="overlay" id="mConfirm"><div class="mbox" role="alertdialog" aria-label="Confirm" style="width:min(420px,92vw)">
+ <h2 id="cTitle">Are you sure?</h2><p class="sub" id="cMsg"></p>
+ <div style="display:flex;gap:8px;justify-content:flex-end">
+  <button class="btn" id="cCancel">Cancel</button><button class="btn danger" id="cOk" style="border-color:color-mix(in oklab,var(--err) 50%,transparent)">Delete</button></div>
+</div></div>
+
+<div class="overlay" id="mPrompt"><div class="mbox" role="dialog" aria-label="Input" style="width:min(440px,92vw)">
+ <h2 id="prTitle">Value</h2><p class="sub" id="prSub"></p>
+ <div class="field"><input id="prIn" spellcheck="false"></div>
+ <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
+  <button class="btn" id="prCancel">Cancel</button><button class="btn primary" id="prOk">Apply</button></div>
+</div></div>
+
+<div id="drawer" aria-label="Settings">
+ <div class="dh"><h2>Settings</h2><span class="tspacer"></span>
+  <button class="xbtn" id="drawerClose" aria-label="Close settings"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+ <div class="db">
+  <div class="set-sec">Appearance</div>
+  <div class="set-row"><label>Theme</label>
+   <div class="seg" id="setTheme"><button data-th="dark">Dark</button><button data-th="light">Light</button><button data-th="system">System</button></div></div>
+   <div class="set-sec" style="margin-top:10px">Theme Preset</div>
+   <div class="preset-grid" id="presetGrid"></div>
+  <div class="set-row"><label>Accent</label><div class="swatches" id="setSw"></div></div>
+  <div class="set-row"><label for="hue">Custom hue</label><input type="range" id="hue" min="0" max="360"><output id="hueVal" style="font-family:var(--font-mono);font-size:11px;color:var(--tx3);min-width:34px;text-align:right"></output></div>
+  <div class="set-row"><label for="setFs">Editor font size</label><input type="range" id="setFs" min="11" max="18"><output id="fsVal" style="font-family:var(--font-mono);font-size:11px;color:var(--tx3);min-width:34px;text-align:right"></output></div>
+  <div class="set-row"><label for="setDensity">UI density</label><select class="mini" id="setDensity"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></div>
+  <div class="set-row"><label for="setRadius">Corner radius</label><input type="range" id="setRadius" min="4" max="16"><output id="radVal" style="font-family:var(--font-mono);font-size:11px;color:var(--tx3);min-width:34px;text-align:right"></output></div>
+  <div class="set-row"><label>Animations</label><button class="tgl" id="setAnim" role="switch" aria-label="Animations"></button></div>
+  <div class="set-sec">JSON viewer</div>
+  <div class="set-row"><label for="setIndent">Indentation</label><select class="mini" id="setIndent"><option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tabs</option></select></div>
+  <div class="set-row"><label>Line numbers</label><button class="tgl" id="setLnums" role="switch" aria-label="Line numbers"></button></div>
+  <div class="set-row"><label>Type badges</label><button class="tgl" id="setBadges" role="switch" aria-label="Type badges"></button></div>
+  <div class="set-row"><label>Array indexes</label><button class="tgl" id="setIdx" role="switch" aria-label="Array indexes"></button></div>
+  <div class="set-row"><label>Value previews</label><button class="tgl" id="setPrev" role="switch" aria-label="Value previews"></button></div>
+  <div class="set-row"><label for="setDepth">Default expansion depth</label><select class="mini" id="setDepth"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+  <div class="set-sec">Behavior</div>
+  <div class="set-row"><label>Auto-format on paste</label><button class="tgl" id="setAutoFmt" role="switch" aria-label="Auto-format on paste"></button></div>
+  <div class="set-row"><label>Auto-save documents</label><button class="tgl" id="setAutosave" role="switch" aria-label="Auto-save"></button></div>
+  <div class="set-row"><label>Confirm destructive actions</label><button class="tgl" id="setConfirm" role="switch" aria-label="Confirm destructive"></button></div>
+  <div class="set-row"><label>Restore previous session</label><button class="tgl" id="setRestore" role="switch" aria-label="Restore session"></button></div>
+ </div>
+</div>
+
+<div id="ctx" role="menu"></div>
+<div id="toasts" aria-live="polite"></div>
+<input type="file" id="fileIn" accept=".json,.txt,application/json" hidden>
+<input type="file" id="fileB" accept=".json,.txt,application/json" hidden>
+<script src="app.js"></script>
+</body>
+</html>
